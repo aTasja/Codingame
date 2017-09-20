@@ -32,11 +32,5 @@ for i in range(len(grid)):
                     break
                 else:
                     bottom = '-1 -1'
-#            print '{} {} {}'.format(node,right,bottom)
-            print node, right, bottom
-                    
-                        
 
-
-
-# Three coordinates: a node, its right neighbor, its bottom neighbor
+            print node, right, bottom               # Three coordinates: a node, its right neighbor, its bottom neighbor
