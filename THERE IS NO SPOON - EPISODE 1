@@ -1,0 +1,42 @@
+#https://www.codingame.com/training/medium/there-is-no-spoon-episode-1
+
+import sys
+import math
+
+# Don't let the machines win. You are humanity's last hope...
+
+width = int(raw_input())  # the number of cells on the X axis
+height = int(raw_input())  # the number of cells on the Y axis
+grid = [['' for j in range(width)] for i in range(height)]
+
+for i in xrange(height):
+    line = list(raw_input()) # width characters, each either 0 or .
+    for node in xrange(width):
+        grid[i][node] = line[node]
+        
+# Write an action using print
+# To debug: print >> sys.stderr, "Debug messages..."
+for i in range(len(grid)):
+    for j in range(len(grid[i])):
+        if grid[i][j] == '0':
+            node = '{} {}'.format(j,i)
+            for x in range(j, len(grid[i])):
+                if grid[i][x] == '0' and '{} {}'.format(x,i) != node:
+                    right =  '{} {}'.format(x,i)
+                    break
+                else:
+                    right = '-1 -1'
+            for y in range(i, len(grid)):
+                if grid[y][j] == '0' and '{} {}'.format(j,y) != node:
+                    bottom = '{} {}'.format(j,y)
+                    break
+                else:
+                    bottom = '-1 -1'
+#            print '{} {} {}'.format(node,right,bottom)
+            print node, right, bottom
+                    
+                        
+
+
+
+# Three coordinates: a node, its right neighbor, its bottom neighbor
