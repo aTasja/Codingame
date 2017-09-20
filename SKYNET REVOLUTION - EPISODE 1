@@ -1,0 +1,63 @@
+# https://www.codingame.com/training/medium/skynet-revolution-episode-1
+
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+# n: the total number of nodes in the level, including the gateways
+# l: the number of links
+# e: the number of exit gateways
+
+n, l, e = [int(i) for i in raw_input().split()]
+
+graph = {i:set() for i in range(n)}
+
+for i in xrange(l):
+    # n1: N1 and N2 defines a link between these nodes
+    n1, n2 = [int(j) for j in raw_input().split()]
+    graph[n1].add(n2)
+    graph[n2].add(n1)
+
+gateway = []
+for i in xrange(e):
+    ei = int(raw_input())  # the index of a gateway node
+    gateway.append(ei)
+    
+# game loop
+
+while True:
+    si = int(raw_input())  # The index of the node on which the Skynet agent is positioned this turn
+    
+    def bfs_paths(graph, start, goal):
+        queue = [(start, [start])]
+        while queue:
+            (vertex, path) = queue.pop(0)
+            for next in graph[vertex] - set(path):
+                if next == goal:
+                    yield path + [next]
+                else:
+                    queue.append((next, path + [next]))
+                    
+    def shortest_path(graph, start, goal):
+        try:
+            return next(bfs_paths(graph, start, goal))
+        except StopIteration:
+            return None
+   
+    if len(gateway) > 1:
+        short_edges = []
+        for gate in gateway:
+            see = shortest_path(graph, gate, si)
+            short_edges.append([see[0], see[1]])
+        for one in short_edges:
+            if si in one:
+                path = one
+                break
+            else:
+                path = shortest_path(graph, gateway[0], si)
+    else:
+        path = shortest_path(graph, gateway[0], si)
+            
+    print '{} {}'.format(path[0], path[1]) 
