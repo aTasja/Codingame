@@ -34,7 +34,7 @@ grid = []
 for i in xrange(h):
     grid.append(raw_input())
 
-def block(grid):
+def block(grid): 
     ind = []
     for i in range(h-1):
         for j in range(w-1):
@@ -43,7 +43,7 @@ def block(grid):
                     if grid[i+1][j] == '.':
                         if grid[i+1][j+1] == '.':
                             ind.append((i,j))
-    return self.ind
+    return ind
     
 def get_row(row):
     return grid[row]
@@ -51,7 +51,7 @@ def get_row(row):
 def get_col(col):
     column = ''
     for i in range(h):
-        column += self.grid[i][col]        
+        column += grid[i][col]        
     return column
     
 def fill_row(row, col):
@@ -73,10 +73,7 @@ def fill_col(row, col):
     return c_without_block
        
 n = 0
-       
-blocks = block(grid)
-
-for i in blocks:
+for i in block(grid):
     num = 0
     if '.' not in fill_row(i[0], i[1]):
         num += 1
