@@ -24,75 +24,67 @@ import math
 # Auto-generated code below aims at helping you parse
 # the standard input according to the problem statement.
 
-w = int(raw_input())
-h = int(raw_input())
+w = int(raw_input()) #width
+h = int(raw_input()) #hight
 
 # Write an action using print
 # To debug: print >> sys.stderr, "Debug messages..."
 
-class Grid():
-    def __init__(self, w, h):
-        self.w = w
-        self.h = h
-        self.grid = []
-        for i in xrange(h):
-            self.grid.append(raw_input())
-        self.ind = []
-        
-    def __str__(self):
-        return self.grid
-        
-    def block(self):
-        for i in range(self.h-1):
-            for j in range(self.w-1):
-                if self.grid[i][j] == '.':
-                    if self.grid[i][j+1] == '.':
-                        if self.grid[i+1][j] == '.':
-                            if self.grid[i+1][j+1] == '.':
-                                self.ind.append((i,j))
-        return self.ind
+grid = []
+for i in xrange(h):
+    grid.append(raw_input())
+
+def block(grid):
+    ind = []
+    for i in range(h-1):
+        for j in range(w-1):
+            if grid[i][j] == '.':
+                if grid[i][j+1] == '.':
+                    if grid[i+1][j] == '.':
+                        if grid[i+1][j+1] == '.':
+                            ind.append((i,j))
+    return self.ind
     
-    def get_row(self, row):
-        return self.grid[row]
+def get_row(row):
+    return grid[row]
     
-    def get_col(self, col):
-        column = ''
-        for i in range(self.h):
-            column += self.grid[i][col]        
-        return column
+def get_col(col):
+    column = ''
+    for i in range(h):
+        column += self.grid[i][col]        
+    return column
     
-    def fill_row(self, row, col):
-        r = self.get_row(row)
-        r_without_block = ''
-        if len(r) > col+1:
-            r_without_block = r[:col] + r[col+2:]
-        else:
-            r_without_block = r[:col]
-        return r_without_block
+def fill_row(row, col):
+    r = get_row(row)
+    r_without_block = ''
+    if len(r) > col+1:
+        r_without_block = r[:col] + r[col+2:]
+    else:
+        r_without_block = r[:col]
+    return r_without_block
     
-    def fill_col(self, row, col):
-        c = self.get_col(col)
-        c_without_block = ''
-        if len(c) > row+1:
-            c_without_block = c[:row] + c[row+2:]
-        else:
-            c_without_block = c[:row]
-        return c_without_block
+def fill_col(row, col):
+    c = get_col(col)
+    c_without_block = ''
+    if len(c) > row+1:
+        c_without_block = c[:row] + c[row+2:]
+    else:
+        c_without_block = c[:row]
+    return c_without_block
        
 n = 0
        
-grid = Grid(w, h)
-blocks = grid.block()
+blocks = block(grid)
 
 for i in blocks:
     num = 0
-    if '.' not in grid.fill_row(i[0], i[1]):
+    if '.' not in fill_row(i[0], i[1]):
         num += 1
-    if '.' not in grid.fill_row(i[0]+1, i[1]):
+    if '.' not in fill_row(i[0]+1, i[1]):
         num += 1
-    if '.' not in grid.fill_col(i[0], i[1]):
+    if '.' not in fill_col(i[0], i[1]):
         num += 1
-    if '.' not in grid.fill_col(i[0], i[1]+1):
+    if '.' not in fill_col(i[0], i[1]+1):
         num += 1
     if num > n:
         n = num
