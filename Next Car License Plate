@@ -1,0 +1,42 @@
+# https://www.codingame.com/training/community/next-car-license-plate
+
+import sys
+import math
+import itertools
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+x = raw_input()
+n = int(raw_input())
+
+a = ord(x[0])
+b = ord(x[1])
+cde = int(x[3:6])
+f = ord(x[7])
+g = ord(x[8])
+abcd = []
+
+def getString(length=4, characters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'): # create generator of chars type AAAA, AAAB, ... ZZZZ
+    for s in itertools.product(characters, repeat=length):
+        yield ''.join(s)
+
+for s in getString(): # collect list of chars
+    abcd.append(s)
+    
+chars = "{}{}{}{}".format(x[0], x[1], x[7], x[8]) # chars of the car license plates
+ind = abcd.index(chars)  # ind of chars in list of cars                              
+
+if cde + n <= 999:
+    print ('{}{}-{}-{}{}'.format(x[0],x[1],cde+n,x[7],x[8]))
+else:
+    ind += (cde+n)//999
+    num = (cde+n) - 999*((cde+n)//999)
+    cde = str(num)
+    if len(cde) == 1:
+        num = '00' + cde
+    elif len(cde) == 2:
+        num = '0' + cde
+    else:
+        num = cde
+    print ('{}{}-{}-{}{}'.format(abcd[ind][0], abcd[ind][1], num, abcd[ind][2], abcd[ind][3]))
